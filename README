@@ -1,0 +1,107 @@
+====440 Final Project====
+=========================
+Authors:
+ Sam Sussman
+ Charles Belanger
+ Dustin Ernst
+Project:
+ SSH Client and Server using Python and Paramiko
+
+SSH Client README
+=============
+
+sshclient.py
+
+
+What is this?
+sshclient.py is a ssh client implemented in python using paramiko.
+It also has support for sftp for transferring files, it shows the
+current working directory. 
+
+Packages Needed to have installed
+paramiko
+argparse
+Packages used
+paramiko, sys, os, time, termios, argparse, getpass,
+threading (Thread), Queue (Queue,Empty)
+
+
+How to run
+sshclient.py [-o -u -p -t --sftp]
+-o host name
+-u username
+-p password
+-t port
+=====================================================================
+SFTP commands: Issue ctrl a to start a sftp session.
+get        put        help       exit        ls        cd        cwd
+lwd        lls        lcd        bye         quit      rm        rmdir
+lrm        rmdir        ?        rename      symlink   mkdir
+=====================================================================
+usage:
+use how you typically use ssh
+Bugs:
+Can not do ctrl a when sftp mode is active.
+certain exit conditions do not restore the terminal. ie can't see what you are
+typing if the script ends. Hard to debug because the conditions happened very
+rarely
+
+
+The functions:
+sftpcmds - holds all sftp commands
+
+class sshClient(): -our ssh client
+  def __init__(self,host,user,password,port):
+  def sftpHandle(self,sftp):                                sftp handler
+  def callSftpMethod(self,client,method,opts):              sftp caller
+  def makeInputRaw(self):                                   raw imput
+  def restoreInput(self):                                   Restores out input
+                                                            when script ends
+  def ioThreadFunc(self, fd, q):                            Thread for handling
+                                                            io
+  def read_until(self, connect):   
+  def __del__(self):                                        Deconstructor           
+  def notNull(arg,default=None):                            Arguments passing
+
+
+
+
+
+
+SSH Server README
+==============
+
+sshServer.py
+
+
+Packages needed:
+paramiko - This will need to be installed (use pip install paramiko) and
+modified. Copy the provided transport.py over the one in the paramiko
+directory in your site-packages directory.
+
+
+The system will also need the libc and libpam shared libraries.
+
+Make sure you also have the included pamAuth.py.
+
+You'll need a private rsa key.
+Right now it uses the one that comes with OpenSSH and is used by a normal
+SSH server
+This will prevent you from having to mess around with your keys for
+your machine if you use the normal client.
+
+
+Execution:
+The server will need to be run with root permissions in order to successfully
+log in the user. It takes no arguments.
+
+
+Set the values at the top of the script if you need to change your host,
+port, or private rsa key location.
+
+
+This should be enough to get it running.
+Kill it with "kill"
+
+Other documentation is elsewhere.
+Check out the included report and the comments in the source code.
